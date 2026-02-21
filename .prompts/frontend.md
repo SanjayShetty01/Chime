@@ -4,6 +4,27 @@ The following is a comprehensive prompt engineering guide that describes exactly
 
 ---
 
+## 0. High-Level System Architecture & Goals
+**Prompt:**
+> "Before we write code, here is the high-level plan for what we are building:
+> 
+> **Overview:** A minimal web app to help Indian credit card users verify their cashback by reading PDF statements. The frontend parses data (via a mock backend for now) and shows detailed transaction breakdowns and analytics.
+> 
+> **Core Architecture:**
+> - Keep it modular and extensible.
+> - `src/config/cards.ts`: A centralized dictionary of card configs. Adding a new card should only require adding one simple object.
+> - `src/services/api.ts`: An isolated API service layer so we can easily swap mock data for real backend endpoints later.
+> - `src/types/`: Shared TypeScript interfaces.
+> - `src/mocks/`: All hardcoded sample transactions should live here so they are easily deleted.
+> 
+> **Design Philosophy:**
+> - Clean, minimal, plenty of whitespace.
+> - Built entirely on Shadcn UI.
+> - Subtle use of specific bank brand colors globally.
+> - Responsive for desktop and mobile."
+
+---
+
 ## 1. Project Initialization & Foundation
 **Prompt:**
 > "I want to build a modern web application called 'Chime' for tracking credit card cashback. 
