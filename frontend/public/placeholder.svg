@@ -1,0 +1,28 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 1. The Coin Face (Brand Orange Background) -->
+  <circle cx="256" cy="256" r="256" fill="#F2960D"/>
+
+  <!-- 2. The Reeded Edge (Ridges) -->
+  <!-- Darker orange dashed line creates the "coin teeth" effect -->
+  <circle cx="256" cy="256" r="240" 
+          stroke="#9A3412" 
+          stroke-width="32" 
+          stroke-dasharray="16 20" 
+          fill="none"/>
+
+  <!-- 3. The Inner Rim (Reflective Groove) -->
+  <!-- A thin semi-transparent white ring to make it look like stamped metal -->
+  <circle cx="256" cy="256" r="210" stroke="#FFFFFF" stroke-width="8" stroke-opacity="0.4" fill="none"/>
+
+  <!-- 4. The "S" (Mint Mark) -->
+  <!-- White Serif Font, centered like a denomination -->
+  <text x="50%" y="54%" 
+        dominant-baseline="middle" 
+        text-anchor="middle" 
+        font-family="Georgia, 'Times New Roman', serif" 
+        font-weight="bold" 
+        font-size="260" 
+        fill="#FFFFFF">
+    S
+  </text>
+</svg>
