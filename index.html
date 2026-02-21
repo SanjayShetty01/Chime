@@ -1,46 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chime: A Cashback Tracker App</title>
+    <title>Chime – Credit Card Cashback Calculator</title>
+    <!-- Favicon pointing to favicon.ico in root -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
-    <div class="container">
-        <h1 class="header-title">Chime</h1>
-        <h3 class="sub-header">A Cashback Tracker App</h3>
-        <p>A user-friendly web app built for effortless tracking of cashback rewards from credit card transactions. Seamlessly reconcile statements, monitor cashback earnings, and gain valuable insights into spending patterns—all in one intuitive platform.</p>
-        
-        <h2>Supported Cards:</h2>
-        <div class="card-container">
-            <div class="card-box">
-                <div class="chip"></div>
-                <div class="card-info">
-                    <h3>HSBC Cashback Card</h3>
-                    <div class="card-number">XXXX-XXXX-XXXX-1234</div>
-                </div>
-            </div>
-            <div class="card-box">
-                <div class="chip"></div>
-                <div class="card-info">
-                    <h3>Airtel Axis Cashback Card</h3>
-                    <div class="card-number">XXXX-XXXX-XXXX-5678</div>
-                </div>
-            </div>
-            <div class="card-box">
-                <div class="chip"></div>
-                <div class="card-info">
-                    <h3>SBI Cashback Card</h3>
-                    <div class="card-number">XXXX-XXXX-XXXX-9012</div>
-                </div>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="navbar-container">
+            <div class="logo-group">
+                <svg width="24" height="24" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="10" width="56" height="44" rx="7" stroke="#f59e0b" stroke-width="3" fill="#f59e0b"
+                        fill-opacity="0.12" />
+                    <rect x="4" y="20" width="56" height="5" fill="#f59e0b" opacity="0.18" />
+                    <rect x="11" y="30" width="11" height="8" rx="2" stroke="#f59e0b" stroke-width="1.5" opacity="0.4"
+                        fill="none" />
+                </svg>
+                <h1 class="logo-text">Chime</h1>
             </div>
         </div>
+    </header>
 
-        <h2>Get Started</h2>
-        <button class="button" disabled>Application in Progress</button>
-        
-        <p class="note">Stay tuned! We're working hard to bring you this application.</p>
-    </div>
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <h1 class="hero-title">
+            Verify every <span class="highlight">rupee</span> of cashback.
+        </h1>
+        <p class="hero-subtitle">
+            A user-friendly web app built for effortless tracking of cashback rewards from Indian credit card
+            transactions. Seamlessly reconcile statements, monitor earnings, and gain valuable insights into spending
+            patterns.
+        </p>
+
+        <!-- Supported Cards Grid -->
+        <h2 class="section-title">Supported Credit Cards</h2>
+
+        <div class="card-grid">
+
+            <!-- Card 1 -->
+            <div class="feature-card">
+                <div class="chip-icon">
+                    <div class="chip-lines"></div>
+                </div>
+                <h3>HSBC Cashback</h3>
+                <p>10% on Dining & Groceries</p>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="feature-card">
+                <div class="chip-icon">
+                    <div class="chip-lines"></div>
+                </div>
+                <h3>Airtel Axis</h3>
+                <p>25% on Airtel Bills</p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="feature-card">
+                <div class="chip-icon">
+                    <div class="chip-lines"></div>
+                </div>
+                <h3>SBI Cashback</h3>
+                <p>5% on all Online Spend</p>
+            </div>
+
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-section">
+            <button class="primary-button" disabled>Application in Progress</button>
+            <p class="note">Stay tuned! We're working hard to bring you this application.</p>
+        </div>
+
+    </main>
+
 </body>
+
 </html>
