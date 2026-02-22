@@ -21,9 +21,7 @@ body {
     color: var(--foreground);
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
-    /* Prevent scrolling for the viewport requested */
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -40,7 +38,6 @@ body {
     max-width: 1024px;
     margin: 0 auto;
     padding: 8px 16px;
-    /* Squeezed padding */
     display: flex;
     align-items: center;
 }
@@ -61,7 +58,6 @@ body {
     max-width: 1024px;
     margin: 0 auto;
     padding: 24px 16px;
-    /* Fit perfectly vertically */
     text-align: center;
     flex: 1;
     display: flex;
@@ -74,7 +70,6 @@ body {
     font-weight: 800;
     letter-spacing: -0.025em;
     margin-top: -24px;
-    /* Push the title up slightly */
     margin-bottom: 12px;
 }
 
@@ -109,7 +104,6 @@ body {
     margin: 0 auto;
     display: grid;
     gap: 20px;
-    /* Slightly more space between cards */
     grid-template-columns: 1fr;
 }
 
@@ -131,7 +125,6 @@ body {
     border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 24px 20px;
-    /* Give the cards more breathing room vertically */
     text-align: left;
     box-shadow: var(--shadow-sm);
     transition: border-color 0.2s;
@@ -140,14 +133,16 @@ body {
 
 .feature-card:hover {
     border-color: rgba(245, 158, 11, 0.5);
-    /* Primary color with opacity */
 }
 
 .chip-icon {
-    width: 32px;
-    height: 20px;
+    width: 15%;
+    /* Scale dynamically with the card width */
+    min-width: 28px;
+    max-width: 44px;
+    aspect-ratio: 1.6;
+    /* Perfectly maintain the shape regardless of size */
     background-color: #facc15;
-    /* Yellow-400 */
     opacity: 0.8;
     border-radius: 4px;
     display: flex;
@@ -157,8 +152,8 @@ body {
 }
 
 .chip-lines {
-    width: 16px;
-    height: 10px;
+    width: 50%;
+    height: 50%;
     border-top: 1px solid rgba(0, 0, 0, 0.2);
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
@@ -179,7 +174,6 @@ body {
 /* CTA */
 .cta-section {
     margin-top: 32px;
-    /* Compressed to fit viewport */
 }
 
 .primary-button {
@@ -200,7 +194,6 @@ body {
 .note {
     margin-top: 10px;
     font-size: 0.75rem;
-    /* Made the "Stay tuned!" text smaller */
     color: var(--muted-foreground);
     font-style: italic;
 }
