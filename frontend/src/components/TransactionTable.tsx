@@ -1,66 +1,75 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { Transaction } from "@/types";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
+  Table, TableHeader, TableBody, TableRow, TableHead, TableCell,
 } from "@/components/ui/table";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ArrowUpDown, Download } from "lucide-react";
+import * as XLSX from "xlsx";
 
 interface Props {
   transactions: Transaction[];
 }
 
-type SortField = "date" | "amount" | "cashbackAmount";
+type SortKey = "date" | "amount" | "cashbackAmount";
 
 const TransactionTable = ({ transactions }: Props) => {
-  const [categoryFilter, setCategoryFilter] = useState("all");
-  const [sortField, setSortField] = useState<SortField>("date");
+  const [sortKey, setSortKey] = useState<SortKey>("date");
   const [sortAsc, setSortAsc] = useState(true);
+  const [filterCategory, setFilterCategory] = useState<string>("all");
 
-  const categories = useMemo(
-    () => Array.from(new Set(transactions.map((t) => t.category))),
-    [transactions],
-  );
+  const categories = Array.from(new Set(transactions.map((t) => t.category)));
 
-  const filtered = useMemo(() => {
-    let list = categoryFilter === "all" ? transactions : transactions.filter((t) => t.category === categoryFilter);
-    list = [...list].sort((a, b) => {
-      const av = sortField === "date" ? new Date(a.date).getTime() : a[sortField];
-      const bv = sortField === "date" ? new Date(b.date).getTime() : b[sortField];
-      return sortAsc ? (av as number) - (bv as number) : (bv as number) - (av as number);
-    });
-    return list;
-  }, [transactions, categoryFilter, sortField, sortAsc]);
+  const filtered = filterCategory === "all" ? transactions : transactions.filter((t) => t.category === filterCategory);
+  const sorted = [...filtered].sort((a, b) => {
+    const mul = sortAsc ? 1 : -1;
+    if (sortKey === "date") return mul * a.date.localeCompare(b.date);
+    return mul * (a[sortKey] - b[sortKey]);
+  });
 
-  const totalSpend = filtered.reduce((s, t) => s + t.amount, 0);
-  const totalCashback = filtered.reduce((s, t) => s + t.cashbackAmount, 0);
+  const totalSpend = sorted.reduce((s, t) => s + t.amount, 0);
+  const totalCashback = sorted.reduce((s, t) => s + t.cashbackAmount, 0);
 
-  const toggleSort = (field: SortField) => {
-    if (sortField === field) setSortAsc(!sortAsc);
-    else {
-      setSortField(field);
-      setSortAsc(true);
+  const handleSort = (key: SortKey) => {
+    if (sortKey === key) setSortAsc(!sortAsc);
+    else { setSortKey(key); setSortAsc(true); }
+  };
+
+  const exportData = (format: "csv" | "xlsx" | "txt") => {
+    const rows = sorted.map((t) => ({
+      Date: t.date,
+      Description: t.description,
+      Category: t.category,
+      Amount: t.amount,
+      "Cashback Rate (%)": t.cashbackRate,
+      "Cashback Amount": t.cashbackAmount,
+    }));
+
+    if (format === "xlsx") {
+      const ws = XLSX.utils.json_to_sheet(rows);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Transactions");
+      XLSX.writeFile(wb, "chime-transactions.xlsx");
+      return;
     }
+
+    const headers = Object.keys(rows[0]);
+    const sep = format === "csv" ? "," : "\t";
+    const lines = [headers.join(sep), ...rows.map((r) => headers.map((h) => (r as Record<string, unknown>)[h]).join(sep))];
+    const blob = new Blob([lines.join("\n")], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `chime-transactions.${format}`;
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-3">
-        <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <Select value={filterCategory} onValueChange={setFilterCategory}>
           <SelectTrigger className="w-48">
             <SelectValue placeholder="Filter by category" />
           </SelectTrigger>
@@ -71,52 +80,55 @@ const TransactionTable = ({ transactions }: Props) => {
             ))}
           </SelectContent>
         </Select>
+
+        <div className="flex gap-2">
+          {(["csv", "xlsx", "txt"] as const).map((f) => (
+            <Button key={f} variant="outline" size="sm" onClick={() => exportData(f)}>
+              <Download className="mr-1 h-3 w-3" />
+              {f.toUpperCase()}
+            </Button>
+          ))}
+        </div>
       </div>
 
-      <div className="rounded-lg border bg-background">
+      <div className="rounded-lg border">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>
-                <Button variant="ghost" size="sm" className="px-0" onClick={() => toggleSort("date")}>
-                  Date <ArrowUpDown className="ml-1 h-3 w-3" />
-                </Button>
+              <TableHead className="cursor-pointer" onClick={() => handleSort("date")}>
+                Date <ArrowUpDown className="ml-1 inline h-3 w-3" />
               </TableHead>
               <TableHead>Description</TableHead>
               <TableHead>Category</TableHead>
-              <TableHead className="text-right">
-                <Button variant="ghost" size="sm" className="px-0" onClick={() => toggleSort("amount")}>
-                  Amount <ArrowUpDown className="ml-1 h-3 w-3" />
-                </Button>
+              <TableHead className="cursor-pointer text-right" onClick={() => handleSort("amount")}>
+                Amount (₹) <ArrowUpDown className="ml-1 inline h-3 w-3" />
               </TableHead>
-              <TableHead className="text-right">Rate</TableHead>
-              <TableHead className="text-right">
-                <Button variant="ghost" size="sm" className="px-0" onClick={() => toggleSort("cashbackAmount")}>
-                  Cashback <ArrowUpDown className="ml-1 h-3 w-3" />
-                </Button>
+              <TableHead className="text-right">Rate (%)</TableHead>
+              <TableHead className="cursor-pointer text-right" onClick={() => handleSort("cashbackAmount")}>
+                Cashback (₹) <ArrowUpDown className="ml-1 inline h-3 w-3" />
               </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filtered.map((t) => (
+            {sorted.map((t) => (
               <TableRow key={t.id}>
-                <TableCell className="whitespace-nowrap text-sm">{t.date}</TableCell>
-                <TableCell className="font-medium">{t.description}</TableCell>
-                <TableCell><Badge variant="secondary">{t.category}</Badge></TableCell>
-                <TableCell className="text-right">₹{t.amount.toLocaleString("en-IN")}</TableCell>
+                <TableCell className="font-mono text-xs">{t.date}</TableCell>
+                <TableCell>{t.description}</TableCell>
+                <TableCell>
+                  <span className="rounded-full bg-secondary px-2 py-0.5 text-xs font-medium">{t.category}</span>
+                </TableCell>
+                <TableCell className="text-right font-mono">₹{t.amount.toLocaleString("en-IN")}</TableCell>
                 <TableCell className="text-right">{t.cashbackRate}%</TableCell>
-                <TableCell className="text-right font-medium">₹{t.cashbackAmount.toFixed(2)}</TableCell>
+                <TableCell className="text-right font-mono text-primary">₹{t.cashbackAmount.toFixed(2)}</TableCell>
               </TableRow>
             ))}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TableCell colSpan={3} className="font-semibold">Total</TableCell>
-              <TableCell className="text-right font-semibold">₹{totalSpend.toLocaleString("en-IN")}</TableCell>
+            <TableRow className="bg-muted/50 font-semibold">
+              <TableCell colSpan={3}>Total</TableCell>
+              <TableCell className="text-right font-mono">₹{totalSpend.toLocaleString("en-IN")}</TableCell>
               <TableCell />
-              <TableCell className="text-right font-semibold">₹{totalCashback.toFixed(2)}</TableCell>
+              <TableCell className="text-right font-mono text-primary">₹{totalCashback.toFixed(2)}</TableCell>
             </TableRow>
-          </TableFooter>
+          </TableBody>
         </Table>
       </div>
     </div>
