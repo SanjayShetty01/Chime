@@ -84,25 +84,25 @@ The following is a comprehensive prompt engineering guide that describes exactly
 > 
 > **Header:** Build a clean top navbar displaying the application logo on the left, and the user's `name` with a logout button on the right.
 > 
-> **Main Content:** Build a Shadcn `Card` containing a form with three required fields:
-> 1. A Shadcn `Select` dropdown that iterates through our `cards.ts` config, grouping options by Bank.
+> **Main Content:** Build a Shadcn `Card` containing a form with three fields:
+> 1. A Shadcn `Select` dropdown that iterates through our `cards.ts` config, grouping options by Bank using `SelectGroup` and `SelectLabel`.
 > 2. A drag-and-drop file upload zone for a PDF statement. If a file is selected, show a document icon and the file size.
-> 3. A password `Input` field for the encrypted PDF.
+> 3. An *optional* password `Input` field for the encrypted PDF. Include a Shadcn `Tooltip` with an `Info` icon next to the label explaining that the password is only required if the statement is encrypted. Wait to submit the form until both card and file are present.
 > 
-> When submitted, put the button in a loading state for 1.5 seconds, then navigate to `/results`, passing the mock `CashbackResult` payload via React Router state."
+> When submitted, put the button in a loading state, then navigate to `/results`, passing the mock `CashbackResult` payload via React Router state."
 
 ## 7. Building the Pages: The Results Dashboard
 **Prompt:**
 > "Create the analytics view: `src/pages/ResultsPage.tsx`.
 > 
-> **Dynamic Header:** The background of the header should dynamically adapt its tint to match the specific credit card the user selected (using the `card.color` from the mock data). 
+> **Dynamic Header:** The background of the header should dynamically adapt its tint to match the specific credit card the user selected (using the `card.color` from the mock data). Render a "Back to Upload" button, and include the user's name and a logout button on the right side next to the Theme Toggle.
 > 
 > **Tab Navigation:** Implement Shadcn `Tabs` to navigate between exactly three sections:
-> 1. **Transactions:** A data table (`TransactionTable.tsx`) listing all individual expenses and their computed cashback.
-> 2. **Dashboard:** A visual analytics view (`CategoryCharts.tsx`) utilizing `recharts` to render a Bar chart or Pie chart breaking down spend versus generated cashback by category.
-> 3. **AI Insights:** A card view (`AiSuggestions.tsx`) providing actionable plain-text advice based on their spending habits.
+> 1. **Transactions:** A robust data table (`TransactionTable.tsx`) listing all individual expenses. Implement sortable column headers, a category string filter dropdown, and 3 buttons at the top right to download/export the data table as **CSV, XLSX, or TXT** using the `xlsx` package.
+> 2. **Dashboard:** A visual analytics view (`CategoryCharts.tsx`) utilizing `recharts` to render a Bar chart and Pie chart breaking down spend versus generated cashback by category side-by-side.
+> 3. **AI Summary:** An interactive chat UI (`AIChat.tsx`) that acts as an LLM assistant, storing messages in an array and simulating mocked responses about the user's transaction patterns. Add a `ChatMessage` interface to `types/index.ts` to support this.
 > 
-> Above the tabs, render a `SummaryCards.tsx` component that uses Shadcn `Cards` to display three large metric numbers: Total Spend, Total Cashback, and Effective Rate."
+> Above the tabs, render a `SummaryCards.tsx` component that uses a sleek 4-column horizontal Shadcn `Cards` grid to display Total Transactions, Total Spend, Total Cashback, and Effective Rate."
 
 ## 8. Final Polish & Logo
 **Prompt:**

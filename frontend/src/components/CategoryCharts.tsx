@@ -1,57 +1,53 @@
-import { CategoryBreakdown } from "@/types";
+import { Transaction } from "@/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-  Legend,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+  PieChart, Pie, Cell, Legend,
 } from "recharts";
 
-interface Props {
-  breakdown: CategoryBreakdown[];
-}
-
 const COLORS = [
-  "hsl(210, 70%, 50%)",
+  "hsl(37, 94%, 50%)",
+  "hsl(200, 70%, 50%)",
+  "hsl(150, 60%, 45%)",
   "hsl(340, 65%, 50%)",
-  "hsl(30, 85%, 50%)",
-  "hsl(160, 60%, 40%)",
-  "hsl(270, 55%, 55%)",
-  "hsl(50, 80%, 50%)",
+  "hsl(270, 60%, 55%)",
+  "hsl(45, 90%, 50%)",
+  "hsl(10, 80%, 55%)",
 ];
 
-const CategoryCharts = ({ breakdown }: Props) => {
+const CategoryCharts = ({ transactions }: { transactions: Transaction[] }) => {
+  const byCategory = transactions.reduce<Record<string, { spend: number; cashback: number }>>((acc, t) => {
+    if (!acc[t.category]) acc[t.category] = { spend: 0, cashback: 0 };
+    acc[t.category].spend += t.amount;
+    acc[t.category].cashback += t.cashbackAmount;
+    return acc;
+  }, {});
+
+  const data = Object.entries(byCategory).map(([name, v]) => ({
+    name,
+    spend: v.spend,
+    cashback: parseFloat(v.cashback.toFixed(2)),
+  }));
+
   return (
-    <div className="grid gap-6 md:grid-cols-2">
-      {/* Spend by category – bar chart */}
+    <div className="grid gap-6 lg:grid-cols-2">
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Category-wise Spend</CardTitle>
+          <CardTitle className="text-base">Spend by Category</CardTitle>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={breakdown}>
-              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-              <XAxis dataKey="category" tick={{ fontSize: 12 }} />
+            <BarChart data={data}>
+              <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
+              <XAxis dataKey="name" tick={{ fontSize: 12 }} />
               <YAxis tick={{ fontSize: 12 }} />
-              <Tooltip
-                formatter={(value: number) => `₹${value.toLocaleString("en-IN")}`}
-                contentStyle={{ borderRadius: 8, border: "1px solid hsl(var(--border))" }}
-              />
-              <Bar dataKey="spend" fill="hsl(210, 70%, 50%)" radius={[4, 4, 0, 0]} />
+              <Tooltip formatter={(v: number) => `₹${v.toLocaleString("en-IN")}`} />
+              <Bar dataKey="spend" fill="hsl(37, 94%, 50%)" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </CardContent>
       </Card>
 
-      {/* Cashback by category – pie chart */}
       <Card>
         <CardHeader>
           <CardTitle className="text-base">Cashback Distribution</CardTitle>
@@ -59,21 +55,12 @@ const CategoryCharts = ({ breakdown }: Props) => {
         <CardContent>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
-              <Pie
-                data={breakdown}
-                dataKey="cashback"
-                nameKey="category"
-                cx="50%"
-                cy="50%"
-                outerRadius={100}
-                label={({ category, cashback }) => `${category}: ₹${cashback.toFixed(0)}`}
-                labelLine={false}
-              >
-                {breakdown.map((_, i) => (
+              <Pie data={data} dataKey="cashback" nameKey="name" cx="50%" cy="50%" outerRadius={100} label>
+                {data.map((_, i) => (
                   <Cell key={i} fill={COLORS[i % COLORS.length]} />
                 ))}
               </Pie>
-              <Tooltip formatter={(value: number) => `₹${value.toFixed(2)}`} />
+              <Tooltip formatter={(v: number) => `₹${v}`} />
               <Legend />
             </PieChart>
           </ResponsiveContainer>

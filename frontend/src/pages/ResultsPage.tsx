@@ -1,69 +1,70 @@
 import { useLocation, useNavigate, Navigate } from "react-router-dom";
 import { CashbackResult } from "@/types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, Sparkles } from "lucide-react";
 import TransactionTable from "@/components/TransactionTable";
 import SummaryCards from "@/components/SummaryCards";
 import CategoryCharts from "@/components/CategoryCharts";
-import AiSuggestions from "@/components/AiSuggestions";
+import AIChat from "@/components/AIChat";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, LogOut } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
+import { useAuth } from "@/contexts/AuthContext";
 
 const ResultsPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
   const result = location.state?.result as CashbackResult | undefined;
 
   if (!result) return <Navigate to="/upload" replace />;
 
-  const { card, transactions, summary } = result;
-
   return (
-    <div className="min-h-screen bg-muted/30">
-      {/* Card banner */}
-      <header
-        className="border-b"
-        style={{ backgroundColor: `hsl(${card.color} / 0.08)` }}
-      >
-        <div className="mx-auto flex max-w-5xl items-center gap-4 px-4 py-4">
-          <Button variant="ghost" size="icon" onClick={() => navigate("/upload")}>
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <div className="flex-1">
-            <p className="text-sm text-muted-foreground">{card.bank}</p>
-            <h1 className="text-xl font-semibold text-foreground">
-              {card.icon} {card.name} — Cashback Report
-            </h1>
-          </div>
+    <div className="container max-w-6xl py-6 space-y-6">
+      <div className="flex items-center justify-between">
+        <Button variant="ghost" size="sm" onClick={() => navigate("/upload")} className="gap-1">
+          <ArrowLeft className="h-4 w-4" /> Back to Upload
+        </Button>
+        <div className="flex items-center gap-3">
+          <span className="text-sm text-muted-foreground">{user?.name}</span>
           <ThemeToggle />
+          <Button variant="ghost" size="sm" onClick={() => { logout(); navigate("/"); }}>
+            <LogOut className="h-4 w-4" />
+          </Button>
         </div>
-      </header>
+      </div>
 
-      <main className="mx-auto max-w-5xl px-4 py-8">
-        <SummaryCards summary={summary} cardColor={card.color} />
+      {/* Card Banner */}
+      <div
+        className="flex items-center gap-3 rounded-lg px-5 py-4 text-primary-foreground"
+        style={{ backgroundColor: `hsl(${result.card.color})` }}
+      >
+        <span className="text-2xl">{result.card.icon}</span>
+        <div>
+          <h2 className="text-lg font-semibold">{result.card.name}</h2>
+          <p className="text-sm opacity-90">{result.card.bank}</p>
+        </div>
+      </div>
 
-        <Tabs defaultValue="transactions" className="mt-8">
-          <TabsList>
-            <TabsTrigger value="transactions">Transactions</TabsTrigger>
-            <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
-            <TabsTrigger value="ai" className="gap-1">
-              <Sparkles className="h-3.5 w-3.5" /> AI Insights
-            </TabsTrigger>
-          </TabsList>
+      <Tabs defaultValue="transactions">
+        <TabsList>
+          <TabsTrigger value="transactions">Transactions</TabsTrigger>
+          <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+          <TabsTrigger value="ai">AI Summary</TabsTrigger>
+        </TabsList>
 
-          <TabsContent value="transactions">
-            <TransactionTable transactions={transactions} />
-          </TabsContent>
+        <TabsContent value="transactions" className="mt-4">
+          <TransactionTable transactions={result.transactions} />
+        </TabsContent>
 
-          <TabsContent value="dashboard">
-            <CategoryCharts breakdown={summary.categoryBreakdown} />
-          </TabsContent>
+        <TabsContent value="dashboard" className="mt-4 space-y-6">
+          <SummaryCards result={result} />
+          <CategoryCharts transactions={result.transactions} />
+        </TabsContent>
 
-          <TabsContent value="ai">
-            <AiSuggestions summary={summary} />
-          </TabsContent>
-        </Tabs>
-      </main>
+        <TabsContent value="ai" className="mt-4">
+          <AIChat transactions={result.transactions} />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
