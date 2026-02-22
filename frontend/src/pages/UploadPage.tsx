@@ -17,7 +17,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Upload, FileText, Loader2, LogOut } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Upload, FileText, Loader2, LogOut, Info } from "lucide-react";
 import ChimeLogo from "@/components/ChimeLogo";
 import ThemeToggle from "@/components/ThemeToggle";
 
@@ -33,7 +34,7 @@ const UploadPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!cardId || !file || !password) return;
+    if (!cardId || !file) return;
     setLoading(true);
     try {
       const result: CashbackResult = await uploadStatement({ cardId, file, password });
@@ -135,18 +136,27 @@ const UploadPage = () => {
 
               {/* Password */}
               <div className="space-y-2">
-                <Label htmlFor="pdf-password">PDF Password</Label>
+                <div className="flex items-center gap-2">
+                  <Label htmlFor="pdf-password">PDF Password</Label>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Info className="h-4 w-4 text-muted-foreground cursor-help" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Only required if your bank statement is encrypted.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
                 <Input
                   id="pdf-password"
                   type="password"
-                  placeholder="Enter statement password"
+                  placeholder="Enter statement password (Optional)"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  required
                 />
               </div>
 
-              <Button type="submit" className="w-full" disabled={!cardId || !file || !password || loading}>
+              <Button type="submit" className="w-full" disabled={!cardId || !file || loading}>
                 {loading ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin" /> Processing…
