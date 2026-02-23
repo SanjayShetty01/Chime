@@ -76,3 +76,5 @@ pip-delete-this-directory.txt
 .pydevproject
 .settings/
 
+# backend
+backend/scratchpad/

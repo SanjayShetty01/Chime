@@ -35,5 +35,6 @@ Set-Location -Path "backend"
 .\venv\Scripts\Activate.ps1
 
 # Start Uvicorn (In a real Linux production environment, you would use Gunicorn 
-# to manage multiple Uvicorn worker processes).
-uvicorn main:app --host 0.0.0.0 --port 8000 --workers 4
+# or Uvicorn with the --workers flag to manage multiple worker processes. 
+# However, Uvicorn's --workers flag frequently crashes on Windows with WinError 10022).
+uvicorn main:app --host 0.0.0.0 --port 8000
