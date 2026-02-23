@@ -36,7 +36,7 @@ const ResultsPage = () => {
       {/* Card Banner */}
       <div
         className="flex items-center gap-3 rounded-lg px-5 py-4 text-primary-foreground"
-        style={{ backgroundColor: `hsl(${result.card.color})` }}
+        style={{ backgroundColor: result.card.color }}
       >
         <span className="text-2xl">{result.card.icon}</span>
         <div>
