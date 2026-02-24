@@ -1,0 +1,13 @@
+cards:
+  - id: "sbi-cashback"
+    name: "SBI Cashback Card"
+    bank: "SBI"
+    color: "#0072BC"
+  - id: "axis-airtel"
+    name: "Airtel Axis Credit Card"
+    bank: "Axis Bank"
+    color: "#E20000"
+  - id: "hdfc-swiggy"
+    name: "Swiggy HDFC Credit Card"
+    bank: "HDFC Bank"
+    color: "#FC8019"
