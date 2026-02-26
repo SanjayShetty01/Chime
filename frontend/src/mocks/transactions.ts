@@ -1,5 +1,4 @@
-import { Transaction, CashbackResult, CashbackSummary, CategoryBreakdown } from "@/types";
-import { getCardById } from "@/config/cards";
+import { Transaction, CashbackResult, CashbackSummary, CategoryBreakdown, CardConfig } from "@/types";
 
 const MOCK_TRANSACTIONS: Transaction[] = [
   { id: "1", date: "2025-01-03", description: "Swiggy Order", category: "Dining", amount: 450, cashbackRate: 5, cashbackAmount: 22.5 },
@@ -42,8 +41,7 @@ function buildSummary(transactions: Transaction[]): CashbackSummary {
   };
 }
 
-export function getMockResult(cardId: string): CashbackResult {
-  const card = getCardById(cardId)!;
+export function getMockResult(card: CardConfig): CashbackResult {
   return {
     card,
     transactions: MOCK_TRANSACTIONS,
