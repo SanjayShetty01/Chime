@@ -1,9 +1,9 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import { SUPPORTED_CARDS, getCardsByBank } from "@/config/cards";
-import { uploadStatement } from "@/services/api";
-import { CashbackResult } from "@/types";
+import { getCardsByBank } from "@/config/cards";
+import { uploadStatement, fetchCards } from "@/services/api";
+import { CashbackResult, CardConfig } from "@/types";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Upload, FileText, Loader2, LogOut, Info } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 import ChimeLogo from "@/components/ChimeLogo";
 import ThemeToggle from "@/components/ThemeToggle";
 
@@ -30,7 +31,24 @@ const UploadPage = () => {
   const [file, setFile] = useState<File | null>(null);
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const cardsByBank = getCardsByBank();
+  const { toast } = useToast();
+
+  const [cards, setCards] = useState<CardConfig[]>([]);
+  const [cardsLoading, setCardsLoading] = useState(true);
+
+  useEffect(() => {
+    fetchCards()
+      .then((data) => {
+        setCards(data);
+        setCardsLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch cards:", err);
+        setCardsLoading(false);
+      });
+  }, []);
+
+  const cardsByBank = getCardsByBank(cards);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,7 +56,17 @@ const UploadPage = () => {
     setLoading(true);
     try {
       const result: CashbackResult = await uploadStatement({ cardId, file, password });
+      toast({
+        title: "Statement parsed successfully!",
+        description: `Found ${result.summary.totalTransactions} transactions.`,
+      });
       navigate("/results", { state: { result } });
+    } catch (err: any) {
+      toast({
+        variant: "destructive",
+        title: "Parsing Error",
+        description: err.message || "Something went wrong while processing your statement.",
+      });
     } finally {
       setLoading(false);
     }
@@ -79,9 +107,9 @@ const UploadPage = () => {
               {/* Card selector */}
               <div className="space-y-2">
                 <Label>Credit Card</Label>
-                <Select value={cardId} onValueChange={setCardId}>
+                <Select value={cardId} onValueChange={setCardId} disabled={cardsLoading}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a card" />
+                    <SelectValue placeholder={cardsLoading ? "Loading cards..." : "Select a card"} />
                   </SelectTrigger>
                   <SelectContent>
                     {Object.entries(cardsByBank).map(([bank, cards]) => (
@@ -89,7 +117,7 @@ const UploadPage = () => {
                         <SelectLabel>{bank}</SelectLabel>
                         {cards.map((c) => (
                           <SelectItem key={c.id} value={c.id}>
-                            {c.icon} {c.bank} {c.name}
+                            {c.icon} {c.name}
                           </SelectItem>
                         ))}
                       </SelectGroup>
