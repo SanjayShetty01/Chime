@@ -2,8 +2,8 @@ export interface CardConfig {
   id: string;
   name: string;
   bank: string;
-  color: string; // HSL accent color
-  icon: string; // Lucide icon name or emoji
+  color: string;
+  icon: string;
 }
 
 export interface Transaction {
@@ -17,6 +17,8 @@ export interface Transaction {
 }
 
 export interface CashbackResult {
+  uploadId?: string;
+  month?: string;
   card: CardConfig;
   transactions: Transaction[];
   summary: CashbackSummary;
