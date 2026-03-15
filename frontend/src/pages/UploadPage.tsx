@@ -87,7 +87,10 @@ const UploadPage = () => {
             <h1 className="text-lg font-semibold text-foreground">Chime</h1>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-sm text-muted-foreground">{user?.name}</span>
+            <span className="text-sm text-muted-foreground">{user?.username}</span>
+            <Button variant="ghost" size="sm" onClick={() => navigate("/history")}>
+              History
+            </Button>
             <ThemeToggle />
             <Button variant="ghost" size="sm" onClick={() => { logout(); navigate("/"); }}>
               <LogOut className="h-4 w-4" />
