@@ -1,12 +1,14 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 interface User {
-  name: string;
+  id: string;
+  username: string;
 }
 
 interface AuthContextType {
   user: User | null;
-  login: (name: string) => void;
+  token: string | null;
+  login: (token: string, user: User) => void;
   logout: () => void;
 }
 
@@ -14,29 +16,30 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(() => {
-    const cookieMatch = document.cookie.split('; ').find(row => row.startsWith('chime-user-name='));
-    if (cookieMatch) {
-      const name = decodeURIComponent(cookieMatch.split('=')[1]);
-      if (name) {
-        return { name };
-      }
-    }
-    return null;
+    const stored = localStorage.getItem("chime-user");
+    return stored ? JSON.parse(stored) : null;
   });
 
-  const login = (name: string) => {
-    setUser({ name });
-    const maxAge = 4 * 60 * 60; // 4 hours in seconds
-    document.cookie = `chime-user-name=${encodeURIComponent(name)}; max-age=${maxAge}; path=/; SameSite=Lax`;
+  const [token, setToken] = useState<string | null>(() => {
+    return localStorage.getItem("chime-token");
+  });
+
+  const login = (newToken: string, newUser: User) => {
+    setToken(newToken);
+    setUser(newUser);
+    localStorage.setItem("chime-token", newToken);
+    localStorage.setItem("chime-user", JSON.stringify(newUser));
   };
 
   const logout = () => {
+    setToken(null);
     setUser(null);
-    document.cookie = "chime-user-name=; max-age=0; path=/;";
+    localStorage.removeItem("chime-token");
+    localStorage.removeItem("chime-user");
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
