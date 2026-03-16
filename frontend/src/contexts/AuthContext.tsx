@@ -14,28 +14,44 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
+const setCookie = (name: string, value: string, days: number) => {
+  const expires = new Date(Date.now() + days * 864e5).toUTCString();
+  document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+};
+
+const getCookie = (name: string) => {
+  return document.cookie.split('; ').reduce((r, v) => {
+    const parts = v.split('=');
+    return parts[0] === name ? decodeURIComponent(parts[1]) : r;
+  }, '');
+};
+
+const deleteCookie = (name: string) => {
+  setCookie(name, '', -1);
+};
+
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(() => {
-    const stored = localStorage.getItem("chime-user");
+    const stored = getCookie("chime-user");
     return stored ? JSON.parse(stored) : null;
   });
 
   const [token, setToken] = useState<string | null>(() => {
-    return localStorage.getItem("chime-token");
+    return getCookie("chime-token") || null;
   });
 
   const login = (newToken: string, newUser: User) => {
     setToken(newToken);
     setUser(newUser);
-    localStorage.setItem("chime-token", newToken);
-    localStorage.setItem("chime-user", JSON.stringify(newUser));
+    setCookie("chime-token", newToken, 1);
+    setCookie("chime-user", JSON.stringify(newUser), 1);
   };
 
   const logout = () => {
     setToken(null);
     setUser(null);
-    localStorage.removeItem("chime-token");
-    localStorage.removeItem("chime-user");
+    deleteCookie("chime-token");
+    deleteCookie("chime-user");
   };
 
   return (
