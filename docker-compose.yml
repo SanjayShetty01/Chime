@@ -1,0 +1,27 @@
+# ============================================================================
+# Chime — Docker Compose
+# ============================================================================
+# Usage:
+#   docker compose up --build        # Build and start
+#   docker compose up -d             # Start in background
+#   docker compose down              # Stop
+#   docker compose down -v           # Stop and delete data volume
+# ============================================================================
+
+services:
+  chime:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: chime-app
+    ports:
+      - "8000:8000"
+    environment:
+      - CHIME_SECRET_KEY=${CHIME_SECRET_KEY:-chime-docker-secret-change-me}
+    volumes:
+      - chime-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  chime-data:
+    driver: local
