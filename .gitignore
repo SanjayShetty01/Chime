@@ -79,3 +79,6 @@ pip-delete-this-directory.txt
 # backend
 backend/scratchpad/
 backend/data/
+
+# Docker
+docker-data/
