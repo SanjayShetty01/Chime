@@ -1,5 +1,5 @@
 # ============================================================================
-# Chime — Production Dockerfile (multi-stage)
+# Chime - Production Dockerfile (multi-stage)
 # ============================================================================
 # Stage 1: Build the React frontend
 # Stage 2: Python backend that serves the built SPA + API

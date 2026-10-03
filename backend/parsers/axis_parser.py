@@ -4,7 +4,26 @@ from typing import List
 from .base_parser import BaseParser
 
 class AirtelAxisParser(BaseParser):
+    """
+    Parser for Axis Bank Airtel Credit Card PDF e-statements.
+    Extracts transaction date, merchant description, amount, and debit or credit indicator.
+    """
+
     def parse(self, pdf_path: str, password: str = None) -> List[dict]:
+        """
+        Parses an Airtel Axis credit card statement PDF.
+
+        Args:
+            pdf_path: Local filesystem path to the PDF file.
+            password: Optional password for encrypted PDF statements.
+
+        Returns:
+            List of transaction dictionaries with keys:
+            - date: string in DD/MM/YYYY format
+            - description: merchant or payment text
+            - amount: float transaction amount
+            - type: "Dr" for debits or "Cr" for credits/refunds
+        """
         transactions = []
         
         # Regex to match: "13/01/2026 PYU*SWIGGY FOOD,BANGALORE FOOD PRODUCTS 137.00 Dr"

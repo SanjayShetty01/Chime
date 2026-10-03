@@ -4,13 +4,11 @@ import { useAuth } from "@/contexts/AuthContext";
 import { fetchHistory, deleteUpload, UploadSummary } from "@/services/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Trash2, FileText, Loader2 } from "lucide-react";
-import ChimeLogo from "@/components/ChimeLogo";
-import ThemeToggle from "@/components/ThemeToggle";
-import { LogOut } from "lucide-react";
+import { ArrowLeft, Trash2, FileText, Loader2, FolderOpen } from "lucide-react";
+import Navbar from "@/components/Navbar";
 
 const HistoryPage = () => {
-    const { user, logout } = useAuth();
+    const { user } = useAuth();
     const navigate = useNavigate();
     const [uploads, setUploads] = useState<UploadSummary[]>([]);
     const [loading, setLoading] = useState(true);
@@ -50,21 +48,7 @@ const HistoryPage = () => {
 
     return (
         <div className="min-h-screen bg-muted/30">
-            <header className="border-b bg-background">
-                <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-3">
-                    <div className="flex items-center gap-2">
-                        <ChimeLogo size={22} />
-                        <h1 className="text-lg font-semibold text-foreground">Chime</h1>
-                    </div>
-                    <div className="flex items-center gap-3">
-                        <span className="text-sm text-muted-foreground">{user?.username}</span>
-                        <ThemeToggle />
-                        <Button variant="ghost" size="sm" onClick={() => { logout(); navigate("/"); }}>
-                            <LogOut className="h-4 w-4" />
-                        </Button>
-                    </div>
-                </div>
-            </header>
+            <Navbar />
 
             <main className="mx-auto max-w-4xl px-4 py-8">
                 <div className="mb-6 flex items-center justify-between">
@@ -120,6 +104,7 @@ const HistoryPage = () => {
                                                         variant="ghost"
                                                         size="icon"
                                                         className="h-8 w-8 text-muted-foreground hover:text-destructive"
+                                                        title="Delete upload"
                                                         onClick={(e) => {
                                                             e.stopPropagation();
                                                             handleDelete(u.id);
@@ -146,6 +131,22 @@ const HistoryPage = () => {
                                                         <span className="text-muted-foreground">Cashback</span>
                                                         <span className="font-medium text-primary">
                                                             ₹{u.totalCashback.toFixed(2)} ({u.effectiveRate.toFixed(2)}%)
+                                                        </span>
+                                                    </div>
+                                                    <div className="mt-4 flex items-center justify-between border-t pt-3">
+                                                        <Button
+                                                            size="sm"
+                                                            className="h-8 gap-1.5 text-xs font-medium"
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                navigate(`/results/${u.id}`);
+                                                            }}
+                                                        >
+                                                            <FolderOpen className="h-3.5 w-3.5" />
+                                                            Load Statement
+                                                        </Button>
+                                                        <span className="text-xs text-muted-foreground">
+                                                            Uploaded on {new Date(u.uploadedAt).toLocaleDateString()}
                                                         </span>
                                                     </div>
                                                 </CardContent>

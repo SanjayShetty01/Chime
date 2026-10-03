@@ -21,8 +21,8 @@ develop-eggs/
 dist/
 downloads/
 eggs/
-lib/
-lib64/
+/lib/
+/lib64/
 parts/
 sdist/
 var/
@@ -79,6 +79,7 @@ pip-delete-this-directory.txt
 # backend
 backend/scratchpad/
 backend/data/
+backend/*.spec
 
 # Docker
 docker-data/

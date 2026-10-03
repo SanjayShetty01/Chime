@@ -18,10 +18,9 @@ FRONTEND_PID=$!
 cd ..
 
 # 2. Start the FastAPI Backend Server
-echo -e "\033[1;32m-> Launching FastAPI Backend (Uvicorn) on port 8000...\033[0m"
+echo -e "\033[1;32m-> Launching FastAPI Backend (Uvicorn via uv) on port 8000...\033[0m"
 cd backend
-source venv/bin/activate
-uvicorn main:app --reload --port 8000 &
+uv run uvicorn main:app --reload --port 8000 &
 BACKEND_PID=$!
 cd ..
 

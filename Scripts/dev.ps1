@@ -16,8 +16,8 @@ Write-Host "-> Launching React Frontend (Vite) on port 5173..." -ForegroundColor
 Start-Process powershell -ArgumentList "-NoExit", "-Command", "npm run dev" -WorkingDirectory $FrontendPath
 
 # 2. Start the FastAPI Backend Server
-Write-Host "-> Launching FastAPI Backend (Uvicorn) on port 8000..." -ForegroundColor Green
-Start-Process powershell -ArgumentList "-NoExit", "-Command", ".\venv\Scripts\Activate.ps1; uvicorn main:app --reload --port 8000" -WorkingDirectory $BackendPath
+Write-Host "-> Launching FastAPI Backend (Uvicorn via uv) on port 8000..." -ForegroundColor Green
+Start-Process powershell -ArgumentList "-NoExit", "-Command", "uv run uvicorn main:app --reload --port 8000" -WorkingDirectory $BackendPath
 
 Write-Host "All services started!" -ForegroundColor Cyan
 Write-Host "You can close this window at any time without killing the servers." -ForegroundColor Gray

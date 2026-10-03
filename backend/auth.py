@@ -5,7 +5,7 @@ from jose import jwt, JWTError
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
-# Secret key for JWT — in production, use an env var
+# Secret key for JWT - in production, use an env var
 SECRET_KEY = os.environ.get("CHIME_SECRET_KEY", "chime-dev-secret-key-change-in-production")
 ALGORITHM = "HS256"
 TOKEN_EXPIRE_HOURS = 24

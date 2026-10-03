@@ -6,13 +6,22 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
 import ChimeLogo from "@/components/ChimeLogo";
 import ThemeToggle from "@/components/ThemeToggle";
 
+const SECURITY_QUESTIONS = [
+    "What's your crush name?",
+    "What year you passed 10th?",
+    "Name of your first love",
+];
+
 const SignUpPage = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [securityQuestion, setSecurityQuestion] = useState(SECURITY_QUESTIONS[0]);
+    const [securityAnswer, setSecurityAnswer] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const { login } = useAuth();
@@ -20,12 +29,20 @@ const SignUpPage = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!username.trim() || !password) return;
+        if (!username.trim() || !password || !securityAnswer.trim()) {
+            setError("Please fill in all fields.");
+            return;
+        }
         setLoading(true);
         setError("");
 
         try {
-            const data = await registerUser(username.trim(), password);
+            const data = await registerUser(
+                username.trim(),
+                password,
+                securityQuestion,
+                securityAnswer.trim()
+            );
             login(data.token, data.user);
             navigate("/upload");
         } catch (err: any) {
@@ -40,7 +57,7 @@ const SignUpPage = () => {
             <div className="flex justify-end p-3">
                 <ThemeToggle />
             </div>
-            <div className="flex flex-1 items-center justify-center px-4">
+            <div className="flex flex-1 items-center justify-center px-4 py-8">
                 <Card className="w-full max-w-md">
                     <CardHeader className="text-center">
                         <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
@@ -70,6 +87,34 @@ const SignUpPage = () => {
                                     placeholder="Choose a password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="security-question">Security Question (for Password Reset)</Label>
+                                <Select value={securityQuestion} onValueChange={setSecurityQuestion}>
+                                    <SelectTrigger id="security-question">
+                                        <SelectValue placeholder="Select a question" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {SECURITY_QUESTIONS.map((q) => (
+                                            <SelectItem key={q} value={q}>
+                                                {q}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="security-answer">Your Answer</Label>
+                                <Input
+                                    id="security-answer"
+                                    type="text"
+                                    placeholder="Enter your secret answer"
+                                    value={securityAnswer}
+                                    onChange={(e) => setSecurityAnswer(e.target.value)}
                                     required
                                 />
                             </div>

@@ -32,20 +32,25 @@ cards:
     bank: "Axis Bank"
     color: "#E20000"
     icon: "💳"
-    # Based on Airtel Axis Bank Credit Card T&C
+    # Based on Airtel Axis Bank Credit Card T&C (Updated rules)
+    # Airtel 25% capped at 2x base cashback; Utilities 10% capped at 1x base cashback
     categories:
       - name: "Airtel Services"
         rate: 25.0
-        cap: 250  # ₹250/month on Airtel recharges and bills
+        cap: null
+        cap_multiplier: 2.0
+        cap_base_category: "Other"
       - name: "Food & Grocery"
         rate: 10.0
-        cap: 500  # Swiggy, Zomato, BigBasket, Blinkit
+        cap: 200  # Zomato, Blinkit, District Movies (max 200/month)
       - name: "Utilities"
         rate: 10.0
-        cap: 300  # Electricity, Water, Gas, DTH
+        cap: null
+        cap_multiplier: 1.0
+        cap_base_category: "Other"
       - name: "Other"
         rate: 1.0
-        cap: null  # Everything else (unlimited)
+        cap: null  # Base 1% spend (unlimited)
       - name: "Excluded"
         rate: 0.0
         cap: null
@@ -68,7 +73,7 @@ cards:
     categories:
       - name: "Swiggy"
         rate: 10.0
-        cap: null  # No stated cap — Swiggy transactions (Food, Instamart, Dineout)
+        cap: null  # No stated cap - Swiggy transactions (Food, Instamart, Dineout)
       - name: "Online Food Delivery"
         rate: 10.0
         cap: null  # Covers other food delivery platforms

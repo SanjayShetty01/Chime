@@ -4,7 +4,26 @@ from typing import List
 from .base_parser import BaseParser
 
 class SBICashbackParser(BaseParser):
+    """
+    Parser for SBI Cashback Credit Card PDF e-statements.
+    Handles date formats like "10 Dec 25", merchant text, amounts with commas, and D/C indicators.
+    """
+
     def parse(self, pdf_path: str, password: str = None) -> List[dict]:
+        """
+        Parses an SBI Cashback credit card statement PDF.
+
+        Args:
+            pdf_path: Local filesystem path to the PDF file.
+            password: Optional password for encrypted PDF statements.
+
+        Returns:
+            List of transaction dictionaries with keys:
+            - date: string in 'DD Mon YY' format (e.g. '10 Dec 25')
+            - description: merchant or transaction details
+            - amount: float transaction amount
+            - type: "Dr" for debits or "Cr" for credits/refunds
+        """
         transactions = []
         
         # Regex to match: "10 Dec 25 ZEPTO MARKETPLACE PRIV Bangalore IN 1,271.00 D"

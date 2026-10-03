@@ -20,11 +20,10 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Upload, FileText, Loader2, LogOut, Info } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import ChimeLogo from "@/components/ChimeLogo";
-import ThemeToggle from "@/components/ThemeToggle";
+import Navbar from "@/components/Navbar";
 
 const UploadPage = () => {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const fileRef = useRef<HTMLInputElement>(null);
   const [cardId, setCardId] = useState("");
@@ -60,7 +59,11 @@ const UploadPage = () => {
         title: "Statement parsed successfully!",
         description: `Found ${result.summary.totalTransactions} transactions.`,
       });
-      navigate("/results", { state: { result } });
+      if (result.uploadId) {
+        navigate(`/results/${result.uploadId}`, { state: { result } });
+      } else {
+        navigate("/results", { state: { result } });
+      }
     } catch (err: any) {
       toast({
         variant: "destructive",
@@ -80,24 +83,7 @@ const UploadPage = () => {
 
   return (
     <div className="min-h-screen bg-muted/30">
-      <header className="border-b bg-background">
-        <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-3">
-          <div className="flex items-center gap-2">
-            <ChimeLogo size={22} />
-            <h1 className="text-lg font-semibold text-foreground">Chime</h1>
-          </div>
-          <div className="flex items-center gap-3">
-            <span className="text-sm text-muted-foreground">{user?.username}</span>
-            <Button variant="ghost" size="sm" onClick={() => navigate("/history")}>
-              History
-            </Button>
-            <ThemeToggle />
-            <Button variant="ghost" size="sm" onClick={() => { logout(); navigate("/"); }}>
-              <LogOut className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      </header>
+      <Navbar />
 
       <main className="mx-auto max-w-xl px-4 py-12">
         <Card>
