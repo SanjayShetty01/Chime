@@ -1,0 +1,468 @@
+# keyword_rules.yaml
+#
+# Per-card keyword rules for transaction classification.
+# Each card lists categories with keyword lists. Keywords are matched
+# case-insensitively against the transaction description (substring match).
+# Rules are evaluated top-to-bottom; the FIRST matching category wins.
+# If nothing matches, the classifier falls back to sentence-transformers
+# semantic similarity, then to the card's `default_category`.
+
+rules:
+  sbi-cashback:
+    default_category: "Offline Spends"
+    categories:
+      Excluded:
+        # Fuel
+        - petrol
+        - fuel
+        - diesel
+        - hp pump
+        - nayara
+        - bpcl
+        - hpcl
+        - indian oil
+        - iocl
+        - essar fuel
+        - shell fuel
+        - bharat petroleum
+        # Utilities
+        - electricity bill
+        - bescom
+        - msedcl
+        - tpddl
+        - bses
+        - tneb
+        - cesc
+        - wbsedcl
+        - jvvnl
+        - dvvnl
+        - water bill
+        - gas bill
+        - piped gas
+        - mahanagar gas
+        - indraprastha gas
+        - atgl piped
+        - gail gas
+        - dth recharge
+        - dish tv
+        - tata sky
+        - airtel dth
+        - den broadband
+        - hathway
+        - siti cable
+        # Rent
+        - rent payment
+        - rentroom
+        - nobroker rent
+        - rentpay
+        # Insurance
+        - insurance premium
+        - lic premium
+        - hdfc life
+        - icici pru
+        - sbi life
+        - bajaj allianz
+        - star health
+        - new india assurance
+        - oriental insurance
+        - united india
+        # EMI
+        - emi payment
+        - emi processing
+        - emi fee
+        - loan emi
+        - home loan emi
+        - car loan emi
+        - personal loan emi
+        - idfc emi
+        - bajaj finserv emi
+        # Wallet Load
+        - wallet load
+        - paytm wallet
+        - mobikwik wallet
+        - freecharge wallet
+        - phonepe wallet
+        # Government / Taxes
+        - gst
+        - gst payment
+        - income tax
+        - tds payment
+        - challan
+        - municipal tax
+        - nagar nigam
+        - passport fee
+        - traffic fine
+        # Jewelry
+        - tanishq
+        - malabar gold
+        - kalyan jewellers
+        - pc jeweller
+        - senco gold
+
+      Online Spends:
+        # Shopping
+        - amazon
+        - flipkart
+        - myntra
+        - ajio
+        - nykaa
+        - meesho
+        - snapdeal
+        - shopsy
+        - tata cliq
+        - reliance digital
+        - croma
+        - vijay sales
+        - jiomart
+        # Pharmacy / Health
+        - netmeds
+        - 1mg
+        - pharmeasy
+        - apollo pharmacy
+        # Grocery / Delivery
+        - bigbasket
+        - blinkit
+        - zepto
+        - swiggy instamart
+        - dunzo
+        - country delight
+        - licious
+        - freshtohome
+        # Entertainment
+        - bookmyshow
+        - book my show
+        - pvr cinemas
+        - inox movies
+        # Travel
+        - makemytrip
+        - goibibo
+        - ixigo
+        - cleartrip
+        - yatra
+        - airbnb
+        - oyo rooms
+        - treebo
+        - fabhotels
+        # Food delivery (online)
+        - zomato
+        - swiggy
+        - dominos online
+        - pizza hut online
+        # Streaming / Subscriptions
+        - netflix
+        - spotify
+        - prime video
+        - hotstar
+        - zee5
+        - sonyliv
+        - jio cinema
+        - youtube premium
+        - apple icloud
+        - google one
+        - microsoft 365
+        - adobe
+        - canva
+        - notion
+        - udemy
+        - coursera
+        - unacademy
+        - byju
+      Offline Spends:
+        - big bazaar
+        - reliance mart
+        - reliance fresh
+        - dmart
+        - more retail
+        - spencer
+        - retail store
+        - offline
+
+  axis-airtel:
+    default_category: "Other"
+    categories:
+      Excluded:
+        # Fuel
+        - petrol
+        - fuel
+        - diesel
+        - hp pump
+        - nayara
+        - bpcl
+        - hpcl
+        - indian oil
+        - iocl
+        - bharat petroleum
+        # Rent
+        - rent payment
+        - nobroker rent
+        - rentpay
+        # Insurance
+        - insurance premium
+        - lic premium
+        - hdfc life
+        - icici pru
+        - sbi life
+        - bajaj allianz
+        - star health
+        # EMI
+        - emi payment
+        - emi processing
+        - emi fee
+        - loan emi
+        - home loan emi
+        - car loan emi
+        - personal loan emi
+        # Wallet Load
+        - wallet load
+        - paytm wallet
+        - mobikwik wallet
+        - freecharge wallet
+        - phonepe wallet
+        # Government
+        - gst
+        - gst payment
+        - income tax
+        - tds payment
+        - challan
+        - municipal tax
+        - nagar nigam
+        - traffic fine
+        # Cash Advance
+        - cash advance
+        - atm withdrawal
+        # Jewelry
+        - tanishq
+        - malabar gold
+        - kalyan jewellers
+        - pc jeweller
+        - senco gold
+
+      Airtel Services:
+        - airtel
+        - airtelxstream
+        - wynk music
+        - airtel broadband
+        - airtel fiber
+        - airtel prepaid
+        - airtel postpaid
+        - airtel dth
+
+      Food & Grocery:
+        - swiggy
+        - zomato
+        - blinkit
+        - zepto
+        - bigbasket
+        - dunzo
+        - grofers
+        - jiomart grocery
+        - nature basket
+        - licious
+        - freshtohome
+        - country delight
+        - milkbasket
+        - dmart
+        - d-mart
+        - supermarket
+        - dominos
+        - pizza hut
+        - kfc
+        - mcdonald
+        - burger king
+        - subway
+        - starbucks
+        - cafe coffee day
+        - ccd
+        - haldiram
+        - barbeque nation
+        - wow momo
+
+      Utilities:
+        - electricity bill
+        - bescom
+        - msedcl
+        - tpddl
+        - bses
+        - tneb
+        - cesc
+        - wbsedcl
+        - water bill
+        - gas bill
+        - piped gas
+        - mahanagar gas
+        - indraprastha gas
+        - gail gas
+        - dth
+        - dish tv
+        - tata sky
+        - broadband bill
+        - internet bill
+        - jio fiber
+        - bsnl broadband
+
+      Other:
+        - amazon
+        - flipkart
+        - myntra
+        - ajio
+        - tata cliq
+        - meesho
+        - nykaa
+        - croma
+        - reliance
+        - vijay sales
+        - retail
+        - store
+
+  hdfc-swiggy:
+    default_category: "Other"
+    categories:
+      Excluded:
+        # Fuel
+        - petrol
+        - fuel
+        - diesel
+        - hp pump
+        - nayara
+        - bpcl
+        - hpcl
+        - indian oil
+        - iocl
+        - bharat petroleum
+        # Rent
+        - rent payment
+        - nobroker rent
+        - rentpay
+        # Insurance
+        - insurance premium
+        - lic premium
+        - hdfc life
+        - icici pru
+        - sbi life
+        - bajaj allianz
+        - star health
+        # EMI
+        - emi payment
+        - emi processing
+        - emi fee
+        - loan emi
+        - home loan emi
+        - car loan emi
+        - personal loan emi
+        # Wallet Load
+        - wallet load
+        - paytm wallet
+        - mobikwik wallet
+        - freecharge wallet
+        - phonepe wallet
+        # Government
+        - gst
+        - gst payment
+        - income tax
+        - tds payment
+        - challan
+        - municipal tax
+        - nagar nigam
+        - traffic fine
+        # Electricity / Gas (excluded per T&C)
+        - electricity bill
+        - bescom
+        - msedcl
+        - water bill
+        - gas bill
+        - piped gas
+        - mahanagar gas
+        # Cash Advance
+        - cash advance
+        - atm withdrawal
+        # Jewelry
+        - tanishq
+        - malabar gold
+        - kalyan jewellers
+        - pc jeweller
+        - senco gold
+
+      Swiggy:
+        - swiggy
+
+      Online Food Delivery:
+        - zomato
+        - eatsure
+        - box8
+        - freshmenu
+        - faasos
+        - behrouz
+        - innerchef
+
+      Dining:
+        - dominos
+        - pizza hut
+        - kfc
+        - mcdonald
+        - burger king
+        - subway
+        - starbucks
+        - cafe coffee day
+        - ccd
+        - haldiram
+        - barbeque nation
+        - wow momo
+        - punjab grill
+        - bikanervala
+        - natural ice cream
+        - baskin robbins
+        - chaayos
+
+      Online Spends:
+        - amazon
+        - flipkart
+        - myntra
+        - ajio
+        - nykaa
+        - meesho
+        - tata cliq
+        - reliance digital
+        - croma
+        - vijay sales
+        - netmeds
+        - 1mg
+        - pharmeasy
+        - apollo pharmacy
+        - bigbasket
+        - blinkit
+        - zepto
+        - dunzo
+        - bookmyshow
+        - book my show
+        - pvr cinemas
+        - inox
+        - makemytrip
+        - goibibo
+        - ixigo
+        - cleartrip
+        - yatra
+        - airbnb
+        - oyo
+        - treebo
+        - fabhotels
+        - uber
+        - ola
+        - rapido
+        - netflix
+        - spotify
+        - prime video
+        - hotstar
+        - zee5
+        - sonyliv
+        - jio cinema
+        - youtube premium
+        - google one
+        - microsoft 365
+        - adobe
+        - canva
+        - udemy
+        - coursera
+        - unacademy
+        - byju
+
+      # Other is the default - no keywords needed

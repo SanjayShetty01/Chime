@@ -28,12 +28,7 @@ Set-Location -Path ".."
 # In production, you do NOT use the `--reload` flag (it hurts performance).
 # You also bind to `0.0.0.0` so the server is exposed to the public internet,
 # and you often run multiple "workers" to handle high traffic.
-Write-Host "-> Launching FastAPI Backend (Production Mode)..." -ForegroundColor Green
+Write-Host "-> Launching FastAPI Backend (Production Mode via uv)..." -ForegroundColor Green
 Set-Location -Path "backend"
 
-# Activate the virtual environment
-.\venv\Scripts\Activate.ps1
-
-# Start Uvicorn (In a real Linux production environment, you would use Gunicorn 
-# to manage multiple Uvicorn worker processes).
-uvicorn main:app --host 0.0.0.0 --port 8000 --workers 4
+uv run uvicorn main:app --host 0.0.0.0 --port 8000

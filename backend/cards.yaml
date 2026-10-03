@@ -1,0 +1,100 @@
+cards:
+  - id: "sbi-cashback"
+    name: "SBI Cashback Card"
+    bank: "SBI"
+    color: "#0072BC"
+    icon: "💳"
+    # Based on SBI Cashback Card T&C
+    # 5% on online spends (any merchant online), 1% on offline, exclusions apply
+    categories:
+      - name: "Online Spends"
+        rate: 5.0
+        cap: 5000  # ₹/month max cashback cap on 5% category
+      - name: "Offline Spends"
+        rate: 1.0
+        cap: null
+      - name: "Excluded"
+        rate: 0.0
+        cap: null
+    exclusions:
+      # No cashback on these
+      - "Fuel"
+      - "Utilities"
+      - "Rent"
+      - "Insurance"
+      - "EMI"
+      - "Wallet Load"
+      - "Government Fees"
+      - "Jewelry"
+
+  - id: "axis-airtel"
+    name: "Airtel Axis Credit Card"
+    bank: "Axis Bank"
+    color: "#E20000"
+    icon: "💳"
+    # Based on Airtel Axis Bank Credit Card T&C (Updated rules)
+    # Airtel 25% capped at 2x base cashback; Utilities 10% capped at 1x base cashback
+    categories:
+      - name: "Airtel Services"
+        rate: 25.0
+        cap: null
+        cap_multiplier: 2.0
+        cap_base_category: "Other"
+      - name: "Food & Grocery"
+        rate: 10.0
+        cap: 200  # Zomato, Blinkit, District Movies (max 200/month)
+      - name: "Utilities"
+        rate: 10.0
+        cap: null
+        cap_multiplier: 1.0
+        cap_base_category: "Other"
+      - name: "Other"
+        rate: 1.0
+        cap: null  # Base 1% spend (unlimited)
+      - name: "Excluded"
+        rate: 0.0
+        cap: null
+    exclusions:
+      - "Fuel"
+      - "Rent"
+      - "Insurance"
+      - "EMI"
+      - "Wallet Load"
+      - "Government Fees"
+      - "Cash Advance"
+      - "Jewelry"
+
+  - id: "hdfc-swiggy"
+    name: "Swiggy HDFC Credit Card"
+    bank: "HDFC Bank"
+    color: "#FC8019"
+    icon: "💳"
+    # Based on Swiggy HDFC Bank Credit Card T&C
+    categories:
+      - name: "Swiggy"
+        rate: 10.0
+        cap: null  # No stated cap - Swiggy transactions (Food, Instamart, Dineout)
+      - name: "Online Food Delivery"
+        rate: 10.0
+        cap: null  # Covers other food delivery platforms
+      - name: "Dining"
+        rate: 10.0
+        cap: null  # Dining at restaurants (offline POS)
+      - name: "Online Spends"
+        rate: 5.0
+        cap: null  # All other online/e-commerce
+      - name: "Other"
+        rate: 1.0
+        cap: null  # All offline non-dining spends
+      - name: "Excluded"
+        rate: 0.0
+        cap: null
+    exclusions:
+      - "Fuel"
+      - "Rent"
+      - "Insurance"
+      - "EMI"
+      - "Wallet Load"
+      - "Government Fees"
+      - "Cash Advance"
+      - "Utilities"

@@ -1,9 +1,9 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import { SUPPORTED_CARDS, getCardsByBank } from "@/config/cards";
-import { uploadStatement } from "@/services/api";
-import { CashbackResult } from "@/types";
+import { getCardsByBank } from "@/config/cards";
+import { uploadStatement, fetchCards } from "@/services/api";
+import { CashbackResult, CardConfig } from "@/types";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -19,18 +19,35 @@ import {
 } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Upload, FileText, Loader2, LogOut, Info } from "lucide-react";
-import ChimeLogo from "@/components/ChimeLogo";
-import ThemeToggle from "@/components/ThemeToggle";
+import { useToast } from "@/hooks/use-toast";
+import Navbar from "@/components/Navbar";
 
 const UploadPage = () => {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const fileRef = useRef<HTMLInputElement>(null);
   const [cardId, setCardId] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const cardsByBank = getCardsByBank();
+  const { toast } = useToast();
+
+  const [cards, setCards] = useState<CardConfig[]>([]);
+  const [cardsLoading, setCardsLoading] = useState(true);
+
+  useEffect(() => {
+    fetchCards()
+      .then((data) => {
+        setCards(data);
+        setCardsLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch cards:", err);
+        setCardsLoading(false);
+      });
+  }, []);
+
+  const cardsByBank = getCardsByBank(cards);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,7 +55,21 @@ const UploadPage = () => {
     setLoading(true);
     try {
       const result: CashbackResult = await uploadStatement({ cardId, file, password });
-      navigate("/results", { state: { result } });
+      toast({
+        title: "Statement parsed successfully!",
+        description: `Found ${result.summary.totalTransactions} transactions.`,
+      });
+      if (result.uploadId) {
+        navigate(`/results/${result.uploadId}`, { state: { result } });
+      } else {
+        navigate("/results", { state: { result } });
+      }
+    } catch (err: any) {
+      toast({
+        variant: "destructive",
+        title: "Parsing Error",
+        description: err.message || "Something went wrong while processing your statement.",
+      });
     } finally {
       setLoading(false);
     }
@@ -52,21 +83,7 @@ const UploadPage = () => {
 
   return (
     <div className="min-h-screen bg-muted/30">
-      <header className="border-b bg-background">
-        <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-3">
-          <div className="flex items-center gap-2">
-            <ChimeLogo size={22} />
-            <h1 className="text-lg font-semibold text-foreground">Chime</h1>
-          </div>
-          <div className="flex items-center gap-3">
-            <span className="text-sm text-muted-foreground">{user?.name}</span>
-            <ThemeToggle />
-            <Button variant="ghost" size="sm" onClick={() => { logout(); navigate("/"); }}>
-              <LogOut className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      </header>
+      <Navbar />
 
       <main className="mx-auto max-w-xl px-4 py-12">
         <Card>
@@ -79,9 +96,9 @@ const UploadPage = () => {
               {/* Card selector */}
               <div className="space-y-2">
                 <Label>Credit Card</Label>
-                <Select value={cardId} onValueChange={setCardId}>
+                <Select value={cardId} onValueChange={setCardId} disabled={cardsLoading}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a card" />
+                    <SelectValue placeholder={cardsLoading ? "Loading cards..." : "Select a card"} />
                   </SelectTrigger>
                   <SelectContent>
                     {Object.entries(cardsByBank).map(([bank, cards]) => (
@@ -89,7 +106,7 @@ const UploadPage = () => {
                         <SelectLabel>{bank}</SelectLabel>
                         {cards.map((c) => (
                           <SelectItem key={c.id} value={c.id}>
-                            {c.icon} {c.bank} {c.name}
+                            {c.icon} {c.name}
                           </SelectItem>
                         ))}
                       </SelectGroup>

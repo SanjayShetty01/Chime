@@ -1,7 +1,7 @@
 import { CashbackSummary, CategoryBreakdown } from "@/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Lightbulb, TrendingUp, AlertTriangle, Sparkles } from "lucide-react";
+import { Lightbulb, TrendingUp, AlertTriangle, Sparkles, Construction } from "lucide-react";
 
 interface Props {
   summary: CashbackSummary;
@@ -37,7 +37,7 @@ const generateSuggestions = (summary: CashbackSummary): Suggestion[] => {
     suggestions.push({
       icon: TrendingUp,
       title: "Great cashback rate!",
-      description: `You're earning ${effectiveCashbackPercent.toFixed(2)}% effective cashback — that's above average. Keep using this card for your high-reward categories.`,
+      description: `You're earning ${effectiveCashbackPercent.toFixed(2)}% effective cashback, which is above average. Keep using this card for your high-reward categories.`,
       type: "tip",
     });
   }
@@ -59,7 +59,7 @@ const generateSuggestions = (summary: CashbackSummary): Suggestion[] => {
     suggestions.push({
       icon: Sparkles,
       title: "Opportunity to improve",
-      description: `Categories like ${names} are earning less than 1% cashback. Look for cards that specialize in these areas — e.g., SBI CashBack for online spends, Axis ACE for bill payments.`,
+      description: `Categories like ${names} are earning less than 1% cashback. Look for cards that specialize in these areas (e.g., SBI CashBack for online spends, Axis ACE for bill payments).`,
       type: "recommendation",
     });
   }
@@ -92,8 +92,23 @@ const AiSuggestions = ({ summary }: Props) => {
 
   return (
     <div className="space-y-4">
+      <div className="flex items-start gap-3 rounded-lg border border-amber-500/30 bg-amber-500/10 p-3.5 text-sm text-amber-900 dark:text-amber-200">
+        <Construction className="h-5 w-5 shrink-0 text-amber-600 dark:text-amber-400 mt-0.5" />
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <span className="font-semibold text-amber-800 dark:text-amber-300">Work in Progress</span>
+            <Badge variant="outline" className="border-amber-500/40 text-[10px] uppercase tracking-wide bg-amber-500/15 text-amber-700 dark:text-amber-300">
+              Beta
+            </Badge>
+          </div>
+          <p className="text-xs text-amber-700/90 dark:text-amber-300/90 leading-relaxed">
+            AI recommendations and credit card optimization are currently under active development. Real-time market reward tracking and card matching features are coming soon.
+          </p>
+        </div>
+      </div>
+
       <p className="text-sm text-muted-foreground">
-        Based on your spending patterns, here are some recommendations to maximize your cashback.
+        Based on your spending patterns, here are some recommendations to maximize your cashback:
       </p>
       <div className="grid gap-4 md:grid-cols-2">
         {suggestions.map((s, i) => (
