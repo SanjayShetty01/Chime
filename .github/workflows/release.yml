@@ -57,15 +57,14 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential curl wget file libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev
 
-      - name: Install backend dependencies and PyInstaller
+      - name: Install backend dependencies
         working-directory: backend
         run: |
           uv sync
-          uv pip install pyinstaller
 
       - name: Freeze Python backend sidecar
         run: |
-          uv run python Scripts/build-sidecar.py --target ${{ matrix.target }}
+          uv run --project backend python Scripts/build-sidecar.py --target ${{ matrix.target }}
 
       - name: Install frontend dependencies
         working-directory: frontend
