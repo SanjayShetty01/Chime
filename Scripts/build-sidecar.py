@@ -52,9 +52,13 @@ def main():
     print(f"Building sidecar binary for target: {target_triple}")
     print(f"Destination: {dest_path}")
 
-    # Build PyInstaller command
-    pyinstaller_cmd = [
-        sys.executable, "-m", "PyInstaller",
+    # Use uv run pyinstaller if uv is available to ensure the backend virtualenv is used
+    if shutil.which("uv"):
+        runner_prefix = ["uv", "run", "pyinstaller"]
+    else:
+        runner_prefix = [sys.executable, "-m", "PyInstaller"]
+
+    pyinstaller_cmd = runner_prefix + [
         "--noconfirm",
         "--onefile",
         "--name", "chime-backend",
