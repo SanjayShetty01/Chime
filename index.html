@@ -4,83 +4,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chime – Credit Card Cashback Calculator</title>
-    <!-- Favicon pointing to favicon.ico in root -->
+    <title>Chime — Credit Card Cashback Tracker & Statement Analyzer</title>
+    <meta name="description" content="A local-first, privacy-focused desktop application to analyze Indian credit card statements, audit cashback earnings, and verify reward rules with zero cloud uploads.">
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
 
-    <!-- Navbar -->
+    <!-- Navigation Header -->
     <header class="navbar">
         <div class="navbar-container">
-            <div class="logo-group">
-                <svg width="24" height="24" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="4" y="10" width="56" height="44" rx="7" stroke="#f59e0b" stroke-width="3" fill="#f59e0b"
-                        fill-opacity="0.12" />
-                    <rect x="4" y="20" width="56" height="5" fill="#f59e0b" opacity="0.18" />
-                    <rect x="11" y="30" width="11" height="8" rx="2" stroke="#f59e0b" stroke-width="1.5" opacity="0.4"
-                        fill="none" />
+            <a href="#" class="logo-group">
+                <svg width="28" height="28" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="10" width="56" height="44" rx="8" stroke="#f59e0b" stroke-width="3.5" fill="#f59e0b" fill-opacity="0.12" />
+                    <rect x="4" y="21" width="56" height="6" fill="#f59e0b" opacity="0.25" />
+                    <rect x="11" y="32" width="12" height="9" rx="2" stroke="#f59e0b" stroke-width="1.8" opacity="0.6" fill="#f59e0b" fill-opacity="0.2" />
                 </svg>
-                <h1 class="logo-text">Chime</h1>
-            </div>
+                <span class="logo-text">Chime</span>
+                <span class="version-tag">v1.0.0</span>
+            </a>
+
+            <nav class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#cards">Supported Cards</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="https://github.com/SanjayShetty01/Chime/wiki" target="_blank" rel="noopener">Docs</a>
+                <a href="https://github.com/SanjayShetty01/Chime" target="_blank" rel="noopener" class="nav-btn-github">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                    </svg>
+                    <span>GitHub</span>
+                </a>
+            </nav>
         </div>
     </header>
 
-    <!-- Main Content -->
+    <!-- Hero Section -->
     <main class="main-content">
+        <section class="hero-section">
+            <div class="pill-badge">
+                <span class="badge-dot"></span>
+                <span>v1.0.0 Release is Live</span>
+            </div>
 
-        <h1 class="hero-title">
-            Verify every <span class="highlight">rupee</span> of cashback.
-        </h1>
-        <p class="hero-subtitle">
-            A user-friendly web app built for effortless tracking of cashback rewards from Indian credit card
-            transactions. Seamlessly reconcile statements, monitor earnings, and gain valuable insights into spending
-            patterns.
-        </p>
+            <h1 class="hero-title">
+                Verify every <span class="highlight">rupee</span> of credit card cashback.
+            </h1>
+
+            <p class="hero-subtitle">
+                A local-first, privacy-focused application built to reconcile Indian credit card statements, audit rewards, detect missed cashback, and break down spending patterns—with <strong>zero cloud uploads</strong>.
+            </p>
+
+            <div class="cta-group">
+                <a href="https://github.com/SanjayShetty01/Chime/releases/latest" target="_blank" rel="noopener" class="primary-button">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    <span>Download v1.0.0</span>
+                </a>
+                <a href="https://github.com/SanjayShetty01/Chime" target="_blank" rel="noopener" class="secondary-button">
+                    <span>View Repository</span>
+                </a>
+            </div>
+
+            <div class="platform-support">
+                <span>Available for:</span>
+                <span class="platform-tag">Windows (.exe / .msi)</span>
+                <span class="platform-tag">Linux (.deb / .AppImage / .rpm)</span>
+                <span class="platform-tag">macOS (.dmg)</span>
+            </div>
+        </section>
+
+        <!-- Feature Pillars -->
+        <section id="features" class="features-section">
+            <h2 class="section-title">Why Chime?</h2>
+            <p class="section-subtitle">Engineered specifically to solve the opacity of Indian credit card reward calculations.</p>
+
+            <div class="feature-grid">
+                <div class="pillar-card">
+                    <div class="pillar-icon">🔒</div>
+                    <h3>100% Local & Private</h3>
+                    <p>Password-protected bank statements are decrypted in-memory. Transactions are stored in a local SQLite database that never leaves your machine.</p>
+                </div>
+
+                <div class="pillar-card">
+                    <div class="pillar-icon">🧠</div>
+                    <h3>Two-Tier Classification</h3>
+                    <p>Instant deterministic keyword rules cover major Indian merchants (Swiggy, Zomato, Amazon, utilities), backed by an offline semantic NLP embedding model.</p>
+                </div>
+
+                <div class="pillar-card">
+                    <div class="pillar-icon">📊</div>
+                    <h3>Multi-Month Analytics</h3>
+                    <p>Track your cashback realization rate, audit exclusions (fuel, rent, EMI fees), and visualize spend distribution across all your cards over time.</p>
+                </div>
+            </div>
+        </section>
 
         <!-- Supported Cards Grid -->
-        <h2 class="section-title">Supported Credit Cards</h2>
+        <section id="cards" class="cards-section">
+            <h2 class="section-title">Supported Credit Cards</h2>
+            <p class="section-subtitle">Custom reward engines with accurate monthly capping and exclusion filters.</p>
 
-        <div class="card-grid">
-
-            <!-- Card 1 -->
-            <div class="feature-card">
-                <div class="chip-icon">
-                    <div class="chip-lines"></div>
+            <div class="card-grid">
+                <!-- Card 1 -->
+                <div class="credit-card-item sbi-card">
+                    <div class="card-top">
+                        <div class="chip-icon">
+                            <div class="chip-lines"></div>
+                        </div>
+                        <span class="bank-tag">SBI Card</span>
+                    </div>
+                    <h3>SBI Cashback</h3>
+                    <ul class="card-perks">
+                        <li><strong>5%</strong> on all eligible Online Spends</li>
+                        <li><strong>1%</strong> on Offline Spends</li>
+                        <li>₹5,000 monthly cashback capping audit</li>
+                        <li>Automated fuel, utility, and EMI exclusions</li>
+                    </ul>
                 </div>
-                <h3>HSBC Cashback</h3>
-                <p>10% on Dining & Groceries</p>
-            </div>
 
-            <!-- Card 2 -->
-            <div class="feature-card">
-                <div class="chip-icon">
-                    <div class="chip-lines"></div>
+                <!-- Card 2 -->
+                <div class="credit-card-item axis-card">
+                    <div class="card-top">
+                        <div class="chip-icon">
+                            <div class="chip-lines"></div>
+                        </div>
+                        <span class="bank-tag">Axis Bank</span>
+                    </div>
+                    <h3>Airtel Axis</h3>
+                    <ul class="card-perks">
+                        <li><strong>25%</strong> on Airtel Mobile, Broadband & DTH</li>
+                        <li><strong>10%</strong> on Utility bills (electricity, water, gas)</li>
+                        <li><strong>10%</strong> on Food delivery (Swiggy, Zomato, BigBasket)</li>
+                        <li><strong>1%</strong> on all other retail transactions</li>
+                    </ul>
                 </div>
-                <h3>Airtel Axis</h3>
-                <p>25% on Airtel Bills</p>
-            </div>
 
-            <!-- Card 3 -->
-            <div class="feature-card">
-                <div class="chip-icon">
-                    <div class="chip-lines"></div>
+                <!-- Card 3 -->
+                <div class="credit-card-item hdfc-card">
+                    <div class="card-top">
+                        <div class="chip-icon">
+                            <div class="chip-lines"></div>
+                        </div>
+                        <span class="bank-tag">HDFC Bank</span>
+                    </div>
+                    <h3>HDFC Swiggy</h3>
+                    <ul class="card-perks">
+                        <li><strong>10%</strong> on Swiggy Food, Instamart & Dineout</li>
+                        <li><strong>5%</strong> on Top Online Merchants (Amazon, Flipkart, etc.)</li>
+                        <li><strong>1%</strong> on Other eligible spends</li>
+                        <li>Per-category monthly caps calculated automatically</li>
+                    </ul>
                 </div>
-                <h3>SBI Cashback</h3>
-                <p>5% on all Online Spend</p>
             </div>
+        </section>
 
-        </div>
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="steps-section">
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-subtitle">Three simple steps to verify your cashback.</p>
 
-        <!-- CTA -->
-        <div class="cta-section">
-            <button class="primary-button" disabled>Application in Progress</button>
-            <p class="note">Stay tuned! We're working hard to bring you this application.</p>
-        </div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-num">1</div>
+                    <h4>Drop Your PDF Statement</h4>
+                    <p>Select your card, enter your statement password if protected, and upload. Decrypted purely in-memory.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">2</div>
+                    <h4>Automated Audit & Rules</h4>
+                    <p>Transactions are extracted, mapped to reward categories, and checked against monthly caps and exclusions.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">3</div>
+                    <h4>Review & Analyze</h4>
+                    <p>Review the line-by-line reward credit, override any categories if desired, and explore multi-month spend trends.</p>
+                </div>
+            </div>
+        </section>
 
+        <!-- Call to Action Banner -->
+        <section class="download-banner">
+            <h2>Ready to audit your cashback?</h2>
+            <p>Download Chime v1.0.0 now or explore the source code on GitHub.</p>
+            <div class="cta-group">
+                <a href="https://github.com/SanjayShetty01/Chime/releases/latest" target="_blank" rel="noopener" class="primary-button">
+                    Download for Windows / Linux / macOS
+                </a>
+            </div>
+        </section>
     </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <span class="footer-brand">Chime</span>
+                <p>Open-source, local-first financial statement analyzer.</p>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/SanjayShetty01/Chime" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://github.com/SanjayShetty01/Chime/releases" target="_blank" rel="noopener">Releases</a>
+                <a href="https://github.com/SanjayShetty01/Chime/wiki" target="_blank" rel="noopener">Documentation</a>
+                <a href="https://github.com/SanjayShetty01/Chime/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Chime. Built with privacy in mind.</p>
+        </div>
+    </footer>
 
 </body>
 
