@@ -46,7 +46,7 @@ Welcome to the Chime technical documentation and developer wiki. This directory 
 7. [Desktop Packaging and Distribution](07-desktop-packaging-and-tauri.md)
    - Tauri v2 architecture and configuration (`tauri.conf.json`)
    - PyInstaller sidecar binary freeze process
-   - Windows installers (`.exe`, `.msi`), Linux (`.deb`, `.rpm`, `.AppImage`), macOS (`.dmg`)
+   - Windows installers (`.exe`, `.msi`), Linux (`.deb`, `.rpm` [Coming Soon]), macOS (`.dmg`)
    - Preventing Windows file lock errors during packaging
 
 8. [Developer Setup, Testing, and Troubleshooting](08-setup-development-and-troubleshooting.md)

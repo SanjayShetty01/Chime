@@ -342,13 +342,13 @@ npx tauri build
 
 ### Output Installers
 
-| Platform | Installer Path |
-|----------|----------------|
-| Windows MSI | `src-tauri/target/release/bundle/msi/Chime_1.0.0_x64_en-US.msi` |
-| Windows NSIS | `src-tauri/target/release/bundle/nsis/Chime_1.0.0_x64-setup.exe` |
-| macOS DMG | `src-tauri/target/release/bundle/dmg/Chime_1.0.0_x64.dmg` |
-| Linux AppImage | `src-tauri/target/release/bundle/appimage/chime_1.0.0_amd64.AppImage` |
-| Linux DEB | `src-tauri/target/release/bundle/deb/chime_1.0.0_amd64.deb` |
+| Platform | Installer Path | Status |
+|----------|----------------|--------|
+| Windows MSI | `src-tauri/target/release/bundle/msi/Chime_1.0.0_x64_en-US.msi` | Supported |
+| Windows NSIS | `src-tauri/target/release/bundle/nsis/Chime_1.0.0_x64-setup.exe` | Supported |
+| macOS DMG | `src-tauri/target/release/bundle/dmg/Chime_1.0.0_aarch64.dmg` | Supported (Apple Silicon) |
+| Linux DEB | `src-tauri/target/release/bundle/deb/chime_1.0.0_amd64.deb` | Supported |
+| Linux RPM | `src-tauri/target/release/bundle/rpm/chime-1.0.0-1.x86_64.rpm` | *Coming Soon* |
 
 ---
 

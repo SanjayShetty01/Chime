@@ -197,9 +197,8 @@ Download the latest version directly from **[Releases (Latest)](https://github.c
 | **Windows** | `.exe` (NSIS) | [Chime_1.0.0_x64-setup.exe](https://github.com/SanjayShetty01/Chime/releases/latest) (Recommended setup installer) |
 | **Windows** | `.msi` (MSI Installer) | [Chime_1.0.0_x64_en-US.msi](https://github.com/SanjayShetty01/Chime/releases/latest) (Silent enterprise deploy) |
 | **Linux (Ubuntu / Debian)** | `.deb` | [chime_1.0.0_amd64.deb](https://github.com/SanjayShetty01/Chime/releases/latest) (`sudo dpkg -i chime_1.0.0_amd64.deb`) |
-| **Linux (Fedora / RHEL)** | `.rpm` | [chime-1.0.0-1.x86_64.rpm](https://github.com/SanjayShetty01/Chime/releases/latest) (`sudo dnf install chime-1.0.0-1.x86_64.rpm`) |
-| **Linux (Universal)** | `.AppImage` | [chime_1.0.0_amd64.AppImage](https://github.com/SanjayShetty01/Chime/releases/latest) (Portable, runs on any Linux distro) |
-| **macOS** | `.dmg` | [Chime_1.0.0_x64.dmg](https://github.com/SanjayShetty01/Chime/releases/latest) / [Chime_1.0.0_aarch64.dmg](https://github.com/SanjayShetty01/Chime/releases/latest) (Apple Silicon & Intel) |
+| **Linux (Fedora / RHEL)** | `.rpm` | *Coming Soon* (in progress) |
+| **macOS** | `.dmg` | [Chime_1.0.0_aarch64.dmg](https://github.com/SanjayShetty01/Chime/releases/latest) (Apple Silicon) |
 
 Each bundle includes the complete application: the lightweight user interface, the frozen Python calculation engine, and embedded card rules. No external runtime or cloud connection is required.
 
@@ -221,7 +220,7 @@ npm run tauri build
 ```
 
 ```bash
-# Linux (.deb, .rpm, .AppImage) or macOS (.dmg)
+# Linux (.deb) or macOS (.dmg)
 cd frontend
 npm run tauri build
 ```
@@ -231,8 +230,7 @@ Compiled packages are placed in:
 * **Windows Setup (.exe)**: `frontend/src-tauri/target/release/bundle/nsis/`
 * **Windows MSI (.msi)**: `frontend/src-tauri/target/release/bundle/msi/`
 * **Debian / Ubuntu (.deb)**: `frontend/src-tauri/target/release/bundle/deb/`
-* **Fedora / RHEL (.rpm)**: `frontend/src-tauri/target/release/bundle/rpm/`
-* **Portable Linux (.AppImage)**: `frontend/src-tauri/target/release/bundle/appimage/`
+* **Fedora / RHEL (.rpm)**: *Coming soon*
 * **macOS Disk Image (.dmg)**: `frontend/src-tauri/target/release/bundle/dmg/`
 
 ---

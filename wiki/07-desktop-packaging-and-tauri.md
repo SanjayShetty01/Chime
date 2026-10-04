@@ -82,6 +82,6 @@ Compiled installation packages are placed in `frontend/src-tauri/target/release/
 | **Windows** | `.exe` (NSIS) | `bundle/nsis/Chime_1.0.0_x64-setup.exe` | Standard Windows setup installer |
 | **Windows** | `.msi` (MSI) | `bundle/msi/Chime_1.0.0_x64_en-US.msi` | Windows enterprise installer |
 | **Linux (Debian/Ubuntu)** | `.deb` | `bundle/deb/chime_1.0.0_amd64.deb` | Debian package (`sudo dpkg -i ...`) |
-| **Linux (Fedora/RHEL)** | `.rpm` | `bundle/rpm/chime-1.0.0-1.x86_64.rpm` | Red Hat package (`sudo dnf install ...`) |
-| **Linux (Universal)** | `.AppImage` | `bundle/appimage/chime_1.0.0_amd64.AppImage` | Portable universal Linux binary |
-| **macOS** | `.dmg` | `bundle/dmg/Chime_1.0.0_x64.dmg` | macOS disk image installer |
+| **Linux (Fedora/RHEL)** | `.rpm` | `bundle/rpm/chime-1.0.0-1.x86_64.rpm` | *Coming Soon* (packaging in progress) |
+| **macOS** | `.dmg` | `bundle/dmg/Chime_1.0.0_aarch64.dmg` | macOS disk image installer (Apple Silicon) |
+
